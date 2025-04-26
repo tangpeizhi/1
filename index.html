@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPZ的精美导航站</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', '微软雅黑', sans-serif;
+        }
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6e8efb, #a777e3);
+            --secondary-gradient: linear-gradient(135deg, #43cea2, #185a9d);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --animation-speed: 0.3s;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before, header::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            z-index: 0;
+        }
+        
+        header::before {
+            top: -150px;
+            left: -100px;
+        }
+        
+        header::after {
+            bottom: -150px;
+            right: -100px;
+        }
+        
+        header h1 {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 5px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        header p {
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+            font-weight: 300;
+            font-size: 1.1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .greeting {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 40px 0 25px;
+            color: #444;
+            position: relative;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: var(--secondary-gradient);
+            border-radius: 2px;
+        }
+        
+        .workstation {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: slideUp 1s ease-out forwards;
+            animation-delay: 0.6s;
+        }
+        
+        .bookmark-list {
+            list-style-type: none;
+            counter-reset: bookmark-counter;
+        }
+        
+        .bookmark-list li {
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: slideRight 0.6s ease-out forwards;
+        }
+        
+        .bookmark-list li:nth-child(1) { animation-delay: 0.7s; }
+        .bookmark-list li:nth-child(2) { animation-delay: 0.8s; }
+        .bookmark-list li:nth-child(3) { animation-delay: 0.9s; }
+        .bookmark-list li:nth-child(4) { animation-delay: 1.0s; }
+        .bookmark-list li:nth-child(5) { animation-delay: 1.1s; }
+        .bookmark-list li:nth-child(6) { animation-delay: 1.2s; }
+        .bookmark-list li:nth-child(7) { animation-delay: 1.3s; }
+        .bookmark-list li:nth-child(8) { animation-delay: 1.4s; }
+        .bookmark-list li:nth-child(9) { animation-delay: 1.5s; }
+        .bookmark-list li:nth-child(10) { animation-delay: 1.6s; }
+        .bookmark-list li:nth-child(11) { animation-delay: 1.7s; }
+        .bookmark-list li:nth-child(12) { animation-delay: 1.8s; }
+        .bookmark-list li:nth-child(13) { animation-delay: 1.9s; }
+        .bookmark-list li:nth-child(14) { animation-delay: 2.0s; }
+        .bookmark-list li:nth-child(15) { animation-delay: 2.1s; }
+        
+        .bookmark {
+            display: block;
+            text-decoration: none;
+            color: #444;
+            padding: 14px 20px;
+            border-radius: 10px;
+            transition: all var(--animation-speed) ease;
+            background-color: #fff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-weight: 500;
+        }
+        
+        .bookmark::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity var(--animation-speed) ease;
+        }
+        
+        .bookmark::after {
+            counter-increment: bookmark-counter;
+            content: counter(bookmark-counter);
+            position: absolute;
+            right: 20px;
+            color: #aaa;
+            font-size: 0.9rem;
+            font-weight: 300;
+            transition: all var(--animation-speed) ease;
+        }
+        
+        .bookmark:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            color: #fff;
+        }
+        
+        .bookmark:hover::before {
+            opacity: 1;
+        }
+        
+        .bookmark:hover::after {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .bookmark:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-gradient);
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 2.2s;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        }
+        
+        #current-time, #current-date {
+            font-weight: 700;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            -webkit-background-clip: text;
+            color: transparent;
+            padding: 0 5px;
+        }
+        
+        /* 复制按钮相关样式 */
+        .copy-section {
+            margin: 30px 0;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .copy-container {
+            position: relative;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .copy-text {
+            flex: 1 1 70%;
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            font-family: monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+        }
+        
+        .copy-btn {
+            flex: 0 1 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .copy-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 12px;
+            background-color: #333;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip.show {
+            opacity: 1;
+            visibility: visible;
+            bottom: -30px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideRight {
+            from { 
+                opacity: 0; 
+                transform: translateX(-20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .workstation {
+                padding: 20px;
+            }
+            
+            .bookmark {
+                padding: 12px 15px;
+            }
+            
+            .bookmark::after {
+                right: 15px;
+            }
+            
+            .copy-container {
+                flex-direction: column;
+            }
+            
+            .copy-text {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <header>
+            <h1>TPZ的精美导航</h1>
+            <p>为美好的一天做好准备</p>
+        </header>
+        
+        <div class="container">
+            <div class="greeting">
+                <p>今天是 <span id="current-date"></span>，现在时间 <span id="current-time"></span></p>
+                <p>愿你今天工作顺利，心情愉快！</p>
+            </div>
+            
+            
+            <h2 class="section-title">TPZ的工作站</h2>
+            
+            <div class="workstation">
+                <ul class="bookmark-list">
+                    <li><a href="https://www.easychat.top" class="bookmark" target="_blank">Easy Chat</a></li>
+                    <li><a href="https://icepanda473.github.io/" class="bookmark" target="_blank">zxh博客网站</a></li>
+                    <li><a href="https://github.com" class="bookmark" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.bilibili.com" class="bookmark" target="_blank">哔哩哔哩</a></li>
+                    <li><a href="https://mermaid.live/" class="bookmark" target="_blank">流程图制作Mermaid Live Editor</a></li>
+                    <li><a href="https://www.freeconvert.com/zh/image-converter" class="bookmark" target="_blank">图片格式转换器Online Converter</a></li>
+                    <li><a href="https://www.freeconvert.com/zh/video-converter" class="bookmark" target="_blank">视频格式转换器Online Converter</a></li>
+                    <li><a href="https://share.claude.best/" class="bookmark" target="_blank">Claude</a></li>
+                    <li><a href="https://botgroup.chat/" class="bookmark" target="_blank">机器人群聊</a></li>
+                    <li><a href="https://www.fangpi.net/" class="bookmark" target="_blank">放屁音乐网</a></li>
+                    <li><a href="https://search.chongbuluo.com/" class="bookmark" target="_blank">虫部落快搜</a></li>
+                    <li><a href="https://tinify.cn/" class="bookmark" target="_blank">TinyPNG–压缩图片</a></li>
+                    <li><a href="https://www.min2k.com/tools/markmap/" class="bookmark" target="_blank">Markmap-思维导图在线生成</a></li>
+                    <li><a href="https://mail.qq.com" class="bookmark" target="_blank">QQ邮箱</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 TPZ的精美导航. 保留所有权利.</p>
+        </footer>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            
+            // 更新时间
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // 更新日期
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const weekday = weekdays[now.getDay()];
+            document.getElementById('current-date').textContent = `${year}年${month}月${day}日 ${weekday}`;
+        }
+        
+        
+        
+        // 页面加载时更新一次
+        updateDateTime();
+        
+        // 每秒更新一次
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>
